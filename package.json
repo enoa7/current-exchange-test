@@ -8,6 +8,7 @@
     "react-scripts": "3.0.0"
   },
   "scripts": {
+    "serve": "docker container run -it -p 3000:3000 -p 35729:35729 -v $(pwd):/app react:app",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
