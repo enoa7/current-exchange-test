@@ -12,7 +12,7 @@ export function* CurrencyWatcher() {
 function apiUrl(args) {
 	return axios({
 		method: "get",
-		url: `https://api.exchangeratesapi.io/${args}`,
+		url: `https://api.exchangeratesapi.io/latest${args}`,
 	});
 }
 
@@ -20,7 +20,7 @@ function apiUrl(args) {
 function* fetchLatestCurrency(data) {
 	let currency = data.payload;
 	try {
-		const response = yield call(apiUrl, `latest?base=${currency}`);
+		const response = yield call(apiUrl, `?base=${currency}`);
 		const rates = response.data;
 
 		// dispatch a success action to the store with the new rates
@@ -35,7 +35,7 @@ function* fetchLatestCurrency(data) {
 function* fetchUserCurrencies(data) {
 	let currency = data.payload;
 	try {
-		const response = yield call(apiUrl, `latest?base=${currency.base}&symbols=${currency.currencies.join(",")}`);
+		const response = yield call(apiUrl, `?base=${currency.base}&symbols=${currency.currencies.join(",")}`);
 		const rates = response.data;
 
 		// dispatch a success action to the store with the new rates

@@ -26,3 +26,7 @@
 .full-width {
 	width: 100%;
 }
+
+.pointer-click {
+	cursor: pointer;
+}

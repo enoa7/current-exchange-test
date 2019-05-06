@@ -52,6 +52,13 @@ form {
 .custom-input {
 	width: 50%;
 }
+
+.error {
+	color: white;
+}
+.bg-red {
+	background-color: red;
+}
 /* .App {
   text-align: center;
 }

@@ -12,7 +12,7 @@ class App extends Component {
 		showLists: false,
 		selectedCurrency: "USD",
 		selectedCurrencyValue: 10.0,
-		currencies: ["IDR", "GBP"],
+		currencies: ["IDR", "AUD"],
 		newCurrencies: "BGD",
 	};
 
@@ -21,10 +21,11 @@ class App extends Component {
 		const { fetchCurrency, fetchSelectedCurrencies } = this.props;
 		const { selectedCurrency, currencies } = this.state;
 		fetchCurrency(selectedCurrency); // fetch post on mount
-		fetchSelectedCurrencies({
-			base: selectedCurrency,
-			currencies,
-		});
+		this.getCurrencies();
+		// fetchSelectedCurrencies({
+		// 	base: selectedCurrency,
+		// 	currencies,
+		// });
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -34,21 +35,27 @@ class App extends Component {
 		console.log("state => DID UPDATE", this.state);
 
 		if (prevState.currencies !== this.state.currencies) {
-			fetchSelectedCurrencies({
-				base: selectedCurrency,
-				currencies,
-			});
+			this.getCurrencies();
 		}
 
 		if (prevState.selectedCurrency !== this.state.selectedCurrency) {
 			fetchCurrency(selectedCurrency);
 
+			this.getCurrencies();
+		}
+	}
+
+	getCurrencies = () => {
+		const { selectedCurrency, currencies } = this.state;
+		const { fetchSelectedCurrencies } = this.props;
+
+		if (currencies.length) {
 			fetchSelectedCurrencies({
 				base: selectedCurrency,
 				currencies,
 			});
 		}
-	}
+	};
 
 	onChangeCurrency = event => {
 		this.setState({ selectedCurrency: event.target.value });
@@ -60,7 +67,6 @@ class App extends Component {
 
 	onSymbolsAdd = event => {
 		const { newCurrencies } = this.state;
-		console.log(newCurrencies);
 		this.setState(prevState => ({
 			currencies: [...prevState.currencies, newCurrencies],
 		}));
@@ -74,11 +80,26 @@ class App extends Component {
 		}));
 	};
 
+	onDeleteSymbols = selected => {
+		console.log("on delete => ", selected);
+		const { currencies } = this.state;
+		let x = currencies.filter(e => e != selected);
+
+		this.setState(prevState => ({
+			currencies: x,
+		}));
+	};
+
 	render() {
-		const { isLoading, listOfCurrency, listOfSymbols } = this.props;
+		const { isLoading, listOfCurrency, listOfSymbols, symbolsError } = this.props;
 		const { selectedCurrency, selectedCurrencyValue, newCurrencies, showLists } = this.state;
 		return (
 			<div className="app">
+				{symbolsError && (
+					<div className="p-3 bg-red">
+						<span className="error">{`Oops! ${symbolsError}`}</span>
+					</div>
+				)}
 				{isLoading && (
 					<div className="loader-wrapper">
 						<div className="loader-inner">
@@ -122,7 +143,14 @@ class App extends Component {
 						<div className="currency-list">
 							{listOfSymbols &&
 								listOfSymbols.map((e, i) => {
-									return <Currency data={e} key={i} currencyValue={selectedCurrencyValue} />;
+									return (
+										<Currency
+											data={e}
+											key={i}
+											currencyValue={selectedCurrencyValue}
+											onDeleteSymbols={this.onDeleteSymbols}
+										/>
+									);
 								})}
 						</div>
 					</div>
@@ -172,6 +200,7 @@ const mapStateToProps = ({ CurrencyReducer, SymbolsReducer }) => ({
 	baseRates: CurrencyReducer.data ? CurrencyReducer.data.base : "USD",
 	listOfCurrency: CurrencyReducer.data ? CurrencyReducer.data.rates : {},
 	listOfSymbols: SymbolsReducer.data ? handleRates(SymbolsReducer.data.rates) : [],
+	symbolsError: SymbolsReducer.error ? SymbolsReducer.error.response.data.error : "",
 });
 
 const mapDispatchToProps = dispatch => ({

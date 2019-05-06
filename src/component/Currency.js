@@ -16,7 +16,9 @@ const Currency = props => {
 					<div className="currency-name">{`${props.data.name} - ${Translation[props.data.name]}`}</div>
 					<div className="currency-rate">{`1 ${props.data.name} = ${props.data.value}`}</div>
 				</div>
-				<div>(-)</div>
+				<div className="pointer-click" onClick={() => props.onDeleteSymbols(props.data.name)}>
+					(-)
+				</div>
 			</div>
 		</div>
 	);
