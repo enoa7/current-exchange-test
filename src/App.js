@@ -9,9 +9,11 @@ import { Translation } from "./Translation";
 
 class App extends Component {
 	state = {
+		showLists: false,
 		selectedCurrency: "USD",
-		selectedCurrencyValue: 1,
+		selectedCurrencyValue: 10.0,
 		currencies: ["IDR", "GBP"],
+		newCurrencies: "BGD",
 	};
 
 	componentDidMount() {
@@ -57,14 +59,24 @@ class App extends Component {
 	};
 
 	onSymbolsAdd = event => {
+		const { newCurrencies } = this.state;
+		console.log(newCurrencies);
 		this.setState(prevState => ({
-			currencies: [...prevState.currencies, "AUD"],
+			currencies: [...prevState.currencies, newCurrencies],
+		}));
+
+		event.preventDefault();
+	};
+
+	toggleListOfCurrencies = () => {
+		this.setState(prevState => ({
+			showLists: !prevState.showLists,
 		}));
 	};
 
 	render() {
 		const { isLoading, listOfCurrency, listOfSymbols } = this.props;
-		const { selectedCurrency, selectedCurrencyValue } = this.state;
+		const { selectedCurrency, selectedCurrencyValue, newCurrencies, showLists } = this.state;
 		return (
 			<div className="app">
 				{isLoading && (
@@ -115,9 +127,31 @@ class App extends Component {
 						</div>
 					</div>
 					<div className="footer">
-						<button type="button" className="btn btn-link" onClick={this.onSymbolsAdd}>
+						<button type="button" className="btn btn-link" onClick={this.toggleListOfCurrencies}>
 							(+) Add More Currencies
 						</button>
+						{showLists && (
+							<form onSubmit={this.onSymbolsAdd}>
+								<div className="mx-3">
+									<select
+										className="form-control custom-select"
+										id="addNewCurrency"
+										value={newCurrencies}
+										onChange={e => this.setState({ newCurrencies: e.target.value })}>
+										{Object.keys(listOfCurrency).map((e, i) => {
+											return (
+												<option value={e} key={i}>
+													{e}
+												</option>
+											);
+										})}
+									</select>
+									<button type="submit" className="btn btn-primary">
+										Submit
+									</button>
+								</div>
+							</form>
+						)}
 					</div>
 				</Fragment>
 			</div>
@@ -135,7 +169,7 @@ const handleRates = rates => {
 /** Connect to Redux */
 const mapStateToProps = ({ CurrencyReducer, SymbolsReducer }) => ({
 	isLoading: CurrencyReducer.fetching,
-	baseRates: CurrencyReducer.data ? CurrencyReducer.data.base : "IDR",
+	baseRates: CurrencyReducer.data ? CurrencyReducer.data.base : "USD",
 	listOfCurrency: CurrencyReducer.data ? CurrencyReducer.data.rates : {},
 	listOfSymbols: SymbolsReducer.data ? handleRates(SymbolsReducer.data.rates) : [],
 });
