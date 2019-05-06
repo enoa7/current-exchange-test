@@ -4,9 +4,15 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "money": "^0.2.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "3.0.0"
+    "react-loader-spinner": "^2.3.0",
+    "react-redux": "^7.0.3",
+    "react-scripts": "3.0.0",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-saga": "^1.0.2"
   },
   "scripts": {
     "serve": "docker container run -it -p 3000:3000 -p 35729:35729 -v $(pwd):/app react:app",

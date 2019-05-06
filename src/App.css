@@ -1,28 +1,56 @@
-
 #root {
-  display: flex;
-  justify-content: center;
-  align-items: center
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .app {
-  width: 460px;
-  border: 1px solid #eeeeeead
+	width: 460px;
+	border: 1px solid #eeeeeead;
+	position: relative;
+}
+
+form {
+	width: 100%;
 }
 
 .app-header {
-  padding: 8px;
-  margin-left: 8px;
-  margin-right: 8px;
-  border-bottom: 1px solid #eee;
+	padding: 8px;
+	margin-left: 8px;
+	margin-right: 8px;
+	border-bottom: 1px solid #eee;
 }
 
 .content {
-  /* margin: 16; */
-  padding: 8px;
+	/* margin: 16; */
+	padding: 8px;
 }
 
 .footer {
-  margin: 8px;
+	margin: 8px;
+}
+
+.loader-wrapper {
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.5);
+	width: 100%;
+	height: 100%;
+}
+
+.loader-inner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.custom-select {
+	border: 0;
+	width: 20%;
+	margin-left: -12px;
+}
+
+.custom-input {
+	width: 50%;
 }
 /* .App {
   text-align: center;

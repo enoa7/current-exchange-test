@@ -1,22 +1,28 @@
 .currency-item {
-    border: 1px solid #eee;
-    padding: 8px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+	border: 1px solid #eee;
+	padding: 8px;
 }
 
 .currency-detail {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .currency-rate {
-    font-style: italic;
-    font-size: small;
-    font-weight: 600;
+	font-style: italic;
+	font-size: small;
+	font-weight: 600;
 }
 
 .currency-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.full-width {
+	width: 100%;
 }
