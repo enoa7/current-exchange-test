@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Currency component it matches the snapshot 1`] = `
+<div
+  className="currency-item"
+>
+  <div
+    className="currency-wrapper"
+  >
+    <div>
+      <div
+        className="currency-detail"
+      >
+        <div
+          className="currency-detail-code"
+        />
+        <div
+          className="currency-detail-value"
+        >
+          NaN
+        </div>
+      </div>
+      <div
+        className="currency-name"
+      >
+        undefined - undefined
+      </div>
+      <div
+        className="currency-rate"
+      >
+        1 undefined = undefined
+      </div>
+    </div>
+    <div
+      className="pointer-click"
+      onClick={[Function]}
+    >
+      (-)
+    </div>
+  </div>
+</div>
+`;
